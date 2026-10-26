@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rendervous"
+version = "0.0.1"
+description = "Tensor-library agnostic differentiable engine based on megakernel compute, built on vulky."
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Rendervous Project" },
+]
+requires-python = ">=3.10"
+dependencies = [
+    "vulky>=0.1.5",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[project.urls]
+Homepage = "https://github.com/rendervous/rdv_project"
+Repository = "https://github.com/rendervous/rdv_project"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["tests*"]
+
+[tool.setuptools.package-data]
+"rdv" = ["hlsl/*.h", "core/webgpu_template.js"]
+
+[tool.pytest.ini_options]
+# lets `pytest` work straight from a checkout with no install step: src/
+# is added to sys.path so `import rdv` resolves without PYTHONPATH/-e setup.
+pythonpath = ["src"]
+testpaths = ["src/tests"]
+addopts = "-q --durations=10"
+# GPU-dependent tests are the slow part; the "quick" marker separates pure
+# Python (metaclass/generics) logic, safe to run with no device at all, from
+# tests that touch the GPU - see src/tests/README.md.
+markers = [
+    "gpu: needs a real Vulkan device (dispatches a shader or allocates a buffer)",
+]
