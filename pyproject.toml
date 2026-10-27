@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rendervous"
-version = "0.0.3"
+version = "0.0.4"
 description = "Tensor-library agnostic differentiable engine based on megakernel compute, built on vulky."
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -33,7 +33,7 @@ where = ["src"]
 exclude = ["tests*"]
 
 [tool.setuptools.package-data]
-"rdv" = ["hlsl/*.h", "core/webgpu_template.js"]
+"rdv" = ["shaders/**/*.h", "core/webgpu_template.js"]
 
 [tool.pytest.ini_options]
 # lets `pytest` work straight from a checkout with no install step: src/
